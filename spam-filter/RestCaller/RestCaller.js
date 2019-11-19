@@ -103,11 +103,16 @@
 
     function deleteJunkWithSearch(search) {
         var junkEmailFolder = getJunkMailFolder();
-        var junkMessageResult = getItem('https://outlook.office.com/api/beta/me/MailFolders/' + junkEmailFolder + '/messages/?$select=Id&search=%22' + search + '%22&$top=50');
-        var junkMessages = junkMessageResult.value;
-        for (var i = 0; i < junkMessages.length; i++) {
-            deleteItem('https://outlook.office.com/api/beta/me/messages/' + junkMessages[i].Id);
-        }
+        var junkUrl = 'https://outlook.office.com/api/beta/me/MailFolders/' + junkEmailFolder +
+            '/messages/?$select=Id&search=%22' + search + '%22&$top=50';
+        do {
+            var junkMessageResult = getItem(junkUrl);
+            var junkMessages = junkMessageResult.value;
+            for (var i = 0; i < junkMessages.length; i++) {
+                deleteItem('https://outlook.office.com/api/beta/me/messages/' + junkMessages[i].Id);
+            }
+            junkUrl = junkMessageResult['@odata.nextLink'];
+        } while (junkUrl);
     }
 
     function getJunkMailFolder() {
@@ -122,21 +127,21 @@
     }
 
     function getItem(url) {
-        return restRequest('GET', url);
+        return restRequest('GET', url, false);
     }
 
     function deleteItem(url) {
-        restRequest('DELETE', url);
+        restRequest('DELETE', url, true);
     }
 
-    function restRequest(type, url) {
+    function restRequest(type, url, isAsync) {
         toggleGetItemSpinner(true);
         var result;
         $.ajax({
             type: type,
             url: url,
             dataType: 'json',
-            async: false,
+            async: isAsync,
             headers: { 'Authorization': 'Bearer ' + rawToken }
         }).done(function (item) {
             toggleGetItemSpinner(false);
