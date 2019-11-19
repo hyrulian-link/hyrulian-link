@@ -110,7 +110,7 @@
     }
 
     function getJunkMailFolder() {
-        var foldersResult = getItem('https://outlook.office.com/api/beta/me/MailFolders$top=50');
+        var foldersResult = getItem('https://outlook.office.com/api/beta/me/MailFolders?$top=50');
         var folders = foldersResult.value;
         for (var i = 0; i < folders.length; i++) {
             var folder = folders[i];
