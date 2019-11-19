@@ -134,6 +134,7 @@
             type: type,
             url: url,
             dataType: 'json',
+            async: false,
             headers: { 'Authorization': 'Bearer ' + rawToken }
         }).done(function (item) {
             toggleGetItemSpinner(false);
