@@ -9,6 +9,15 @@
     var getItemSpinnerElement = null;
     var getItemSpinner = null;
 
+    var Queue = function () {
+        var previous = new $.Deferred().resolve();
+
+        return function (fn, fail) {
+            return previous = previous.then(fn, fail || fn);
+        };
+    };
+    var queue = Queue();
+
     // The Office initialize function must be run each time a new page is loaded
     Office.initialize = function (reason) {
         $(document).ready(function () {
@@ -138,20 +147,27 @@
 
     function restRequest(type, url, isAsync) {
         var result;
-        $.ajax({
+        if (isAsync) {
+            queue(function () {
+                return ajaxRequest(type, url, isAsync);
+            });
+        } else {
+            ajaxRequest(type, url, isAsync)
+            .done(function (item) {
+                result = item;
+            });
+        }
+        return result;
+    }
+
+    function ajaxRequest(type, url, isAsync) {
+        return $.ajax({
             type: type,
             url: url,
             dataType: 'json',
             async: isAsync,
             headers: { 'Authorization': 'Bearer ' + rawToken }
-        }).done(function (item) {
-            result = item;
-        }).fail(function (error) {
-            if (error.status == 429) {
-                $.ajax(this);
-            }
         });
-        return result;
     }
 
     function enableButtons() {
