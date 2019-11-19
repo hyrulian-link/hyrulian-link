@@ -107,15 +107,14 @@
 
     function deleteJunk() {
         toggleGetItemSpinner(true);
-        deleteJunkWithSearch('nsub');
-        deleteJunkWithSearch('newsletter');
+        deleteJunkWithSearch();
         toggleGetItemSpinner(false);
     }
 
-    function deleteJunkWithSearch(search) {
+    function deleteJunkWithSearch() {
         var junkEmailFolder = getJunkMailFolder();
         var junkUrl = 'https://outlook.office.com/api/beta/me/MailFolders/' + junkEmailFolder +
-            '/messages/?$select=Id&search=%22' + search + '%22&$top=50';
+            '/messages/?$select=Id&$top=50';
         do {
             var junkMessageResult = getItem(junkUrl);
             var junkMessages = junkMessageResult.value;
