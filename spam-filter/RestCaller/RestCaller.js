@@ -3,7 +3,7 @@
 (function () {
     'use strict';
 
-    var rawToken = '';
+    var rawToken;
     var parsedToken = '';
 
     var Queue = function () {
@@ -21,7 +21,6 @@
     Office.initialize = function (reason) {
         $(document).ready(function () {
             loadRestDetails();
-            deleteJunk();
         });
     };
 
@@ -33,6 +32,7 @@
             } else {
                 rawToken = 'error';
             }
+            deleteJunk();
         });
     }
 
