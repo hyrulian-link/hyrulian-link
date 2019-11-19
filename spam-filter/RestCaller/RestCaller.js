@@ -120,7 +120,13 @@
             var junkMessageResult = getItem(junkUrl);
             var junkMessages = junkMessageResult.value;
             for (var i = 0; i < junkMessages.length; i++) {
-                deleteItem('https://outlook.office.com/api/beta/me/messages/' + junkMessages[i].Id);
+                var message = junkMessages[i];
+                var senderAddress = message.Sender.EmailAddress.Address;
+                var bodyContent = message.Body.Content;
+                if (senderAddress && senderAddress.toUpperCase().includes('NEWSLETTER')
+                    || bodyContent && bodyContent.toUpperCase().includes('UNSUBSCRIBE')) {
+                    deleteItem('https://outlook.office.com/api/beta/me/messages/' + message.Id);
+                }
             }
             junkUrl = junkMessageResult['@odata.nextLink'];
         } while (junkUrl);
