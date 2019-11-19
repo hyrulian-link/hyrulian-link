@@ -97,8 +97,10 @@
     }
 
     function deleteJunk() {
+        toggleGetItemSpinner(true);
         deleteJunkWithSearch('nsub');
         deleteJunkWithSearch('newsletter');
+        toggleGetItemSpinner(false);
     }
 
     function deleteJunkWithSearch(search) {
@@ -135,7 +137,6 @@
     }
 
     function restRequest(type, url, isAsync) {
-        toggleGetItemSpinner(true);
         var result;
         $.ajax({
             type: type,
@@ -144,11 +145,11 @@
             async: isAsync,
             headers: { 'Authorization': 'Bearer ' + rawToken }
         }).done(function (item) {
-            toggleGetItemSpinner(false);
             result = item;
         }).fail(function (error) {
-            toggleGetItemSpinner(false);
-            result = error;
+            if (error.status == 429) {
+                $.ajax(this);
+            }
         });
         return result;
     }
