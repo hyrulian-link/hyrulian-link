@@ -123,7 +123,7 @@
                 var senderAddress = message.Sender.EmailAddress.Address;
                 var bodyContent = message.Body.Content;
                 if (senderAddress && senderAddress.toUpperCase().includes('NEWSLETTER')
-                    || bodyContent && bodyContent.toUpperCase().includes('UNSUBSCRIBE')) {
+                    || bodyContent && bodyContent.toUpperCase().includes('UNSUB')) {
                     deleteItem('https://outlook.office.com/api/beta/me/messages/' + message.Id);
                 }
             }
