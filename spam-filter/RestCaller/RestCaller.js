@@ -130,6 +130,7 @@
 
     function restRequest(type, url) {
         toggleGetItemSpinner(true);
+        var result;
         $.ajax({
             type: type,
             url: url,
@@ -138,11 +139,12 @@
             headers: { 'Authorization': 'Bearer ' + rawToken }
         }).done(function (item) {
             toggleGetItemSpinner(false);
-            return item;
+            result = item;
         }).fail(function (error) {
             toggleGetItemSpinner(false);
-            $('.item-display code').text(JSON.stringify(error, null, 2));
+            result = error;
         });
+        return result;
     }
 
     function enableButtons() {
