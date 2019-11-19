@@ -97,13 +97,25 @@
     }
 
     function deleteJunk() {
-        var junkMessageResult = getItem('https://outlook.office.com/api/beta/me/MailFolders/junkemail/messages/?$select=Sender,Body');
+        var junkEmailFolder = getJunkMailFolder();
+        var junkMessageResult = getItem('https://outlook.office.com/api/beta/me/MailFolders/' + junkEmailFolder + '/messages/?$select=Sender,Body');
         var junkMessages = junkMessageResult.value;
         for (var i = 0; i < junkMessages.length; i++) {
             var message = junkMessages[i];
             if (message.Sender.EmailAddress.Address.toUpperCase().includes('NEWSLETTER')
                 || message.Body.Content.toUpperCase().includes('UNSUBSCRIBE')) {
-                deleteItem('https://outlook.office.com/api/beta/me/MailFolders/messages/' + message.Id);
+                deleteItem('https://outlook.office.com/api/beta/me/messages/' + message.Id);
+            }
+        }
+    }
+
+    function getJunkMailFolder() {
+        var foldersResult = getItem('https://outlook.office.com/api/beta/me/MailFolders');
+        var folders = foldersResult.value;
+        for (var i = 0; i < folders.length; i++) {
+            var folder = folders[i];
+            if (folder.DisplayName.includes('Junk Email')) {
+                return folder.Id;
             }
         }
     }
