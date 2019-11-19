@@ -18,7 +18,7 @@
     };
     var queue = Queue();
 
-    var spamWords = ['NEWSLETTER', 'UNSUB', '.PW']
+    var spamWords = ['NEWSLETTER', 'UNSUB', 'PW', 'EMAIL LIST', 'EMAILS LIST']
 
     // The Office initialize function must be run each time a new page is loaded
     Office.initialize = function (reason) {
