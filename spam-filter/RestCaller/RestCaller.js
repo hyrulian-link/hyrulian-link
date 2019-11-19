@@ -98,7 +98,7 @@
 
     function deleteJunk() {
         var junkEmailFolder = getJunkMailFolder();
-        var junkMessageResult = getItem('https://outlook.office.com/api/beta/me/MailFolders/' + junkEmailFolder + '/messages/?$select=Sender,Body');
+        var junkMessageResult = getItem('https://outlook.office.com/api/beta/me/MailFolders/' + junkEmailFolder + '/messages/?$select=Sender,Body$top=50');
         var junkMessages = junkMessageResult.value;
         for (var i = 0; i < junkMessages.length; i++) {
             var message = junkMessages[i];
@@ -110,7 +110,7 @@
     }
 
     function getJunkMailFolder() {
-        var foldersResult = getItem('https://outlook.office.com/api/beta/me/MailFolders');
+        var foldersResult = getItem('https://outlook.office.com/api/beta/me/MailFolders$top=50');
         var folders = foldersResult.value;
         for (var i = 0; i < folders.length; i++) {
             var folder = folders[i];
