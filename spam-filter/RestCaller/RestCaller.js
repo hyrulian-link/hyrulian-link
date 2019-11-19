@@ -97,15 +97,16 @@
     }
 
     function deleteJunk() {
+        deleteJunkWithSearch('nsub');
+        deleteJunkWithSearch('newsletter');
+    }
+
+    function deleteJunkWithSearch(search) {
         var junkEmailFolder = getJunkMailFolder();
-        var junkMessageResult = getItem('https://outlook.office.com/api/beta/me/MailFolders/' + junkEmailFolder + '/messages/?$select=Sender,Body&$top=50');
+        var junkMessageResult = getItem('https://outlook.office.com/api/beta/me/MailFolders/' + junkEmailFolder + '/messages/?$select=Id&search=%22' + search + '%22&$top=50');
         var junkMessages = junkMessageResult.value;
         for (var i = 0; i < junkMessages.length; i++) {
-            var message = junkMessages[i];
-            if (message.Sender.EmailAddress.Address.toUpperCase().includes('NEWSLETTER')
-                || message.Body.Content.toUpperCase().includes('UNSUBSCRIBE')) {
-                deleteItem('https://outlook.office.com/api/beta/me/messages/' + message.Id);
-            }
+            deleteItem('https://outlook.office.com/api/beta/me/messages/' + junkMessages[i].Id);
         }
     }
 
