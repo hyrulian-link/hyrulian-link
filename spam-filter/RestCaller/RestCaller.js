@@ -114,7 +114,7 @@
     function deleteJunkWithSearch() {
         var junkEmailFolder = getJunkMailFolder();
         var junkUrl = 'https://outlook.office.com/api/beta/me/MailFolders/' + junkEmailFolder +
-            '/messages/?$select=Id&$top=50';
+            '/messages/?$select=Sender,Body&$top=50';
         do {
             var junkMessageResult = getItem(junkUrl);
             var junkMessages = junkMessageResult.value;
