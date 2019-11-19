@@ -18,6 +18,8 @@
     };
     var queue = Queue();
 
+    var spamWords = ['NEWSLETTER', 'UNSUB', '.PW']
+
     // The Office initialize function must be run each time a new page is loaded
     Office.initialize = function (reason) {
         $(document).ready(function () {
@@ -122,8 +124,9 @@
                 var message = junkMessages[i];
                 var senderAddress = message.Sender.EmailAddress.Address;
                 var bodyContent = message.Body.Content;
-                if (senderAddress && senderAddress.toUpperCase().includes('NEWSLETTER')
-                    || bodyContent && bodyContent.toUpperCase().includes('UNSUB')) {
+                var spamWordsRegExp = new RegExp(spamWords.join("|"));
+                if (senderAddress && spamWordsRegExp.test(senderAddress.toUpperCase())
+                    || bodyContent && spamWordsRegExp.test(bodyContent.toUpperCase())) {
                     deleteItem('https://outlook.office.com/api/beta/me/messages/' + message.Id);
                 }
             }
