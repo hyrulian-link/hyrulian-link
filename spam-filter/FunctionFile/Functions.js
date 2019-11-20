@@ -17,9 +17,6 @@ var queue = Queue();
 var spamWords = ['NEWSLETTER', 'UNSUB', 'PW', 'EMAIL LIST', 'EMAILS LIST', 'NETFLIX']
 
 Office.initialize = function () {
-    $(document).ready(function () {
-        loadRestDetails();
-    });
 }
 
 function loadRestDetails() {
