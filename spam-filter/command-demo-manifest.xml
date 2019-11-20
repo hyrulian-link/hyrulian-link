@@ -41,7 +41,6 @@
   </FormSettings>
   <Permissions>ReadWriteMailbox</Permissions>
   <Rule xsi:type="RuleCollection" Mode="Or">
-    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Edit" />
     <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read" />
   </Rule>
   <DisableEntityHighlighting>false</DisableEntityHighlighting>
@@ -55,35 +54,8 @@
     </Requirements>
     <Hosts>
       <Host xsi:type="MailHost">
-
         <DesktopFormFactor>
           <FunctionFile resid="functionFile" />
-
-          <!-- Message compose form -->
-          <ExtensionPoint xsi:type="MessageComposeCommandSurface">
-            <OfficeTab id="TabDefault">
-              <Group id="msgReadDemoGroup">
-                <Label resid="groupLabel" />
-                <!-- Function (UI-less) button -->
-                <Control xsi:type="Button" id="msgReadFunctionButton">
-                  <Label resid="funcReadButtonLabel" />
-                  <Supertip>
-                    <Title resid="funcReadSuperTipTitle" />
-                    <Description resid="funcReadSuperTipDescription" />
-                  </Supertip>
-                  <Icon>
-                    <bt:Image size="16" resid="blue-icon-16" />
-                    <bt:Image size="32" resid="blue-icon-32" />
-                    <bt:Image size="80" resid="blue-icon-80" />
-                  </Icon>
-                  <Action xsi:type="ExecuteFunction">
-                    <FunctionName>loadRestDetails</FunctionName>
-                  </Action>
-                </Control>
-              </Group>
-            </OfficeTab>
-          </ExtensionPoint>
-
           <!-- Message read form -->
           <ExtensionPoint xsi:type="MessageReadCommandSurface">
             <OfficeTab id="TabDefault">
@@ -108,7 +80,6 @@
               </Group>
             </OfficeTab>
           </ExtensionPoint>
-          
         </DesktopFormFactor>
       </Host>
     </Hosts>
@@ -165,32 +136,6 @@
 
           <DesktopFormFactor>
             <FunctionFile resid="functionFile" />
-
-            <!-- Message compose form -->
-            <ExtensionPoint xsi:type="MessageComposeCommandSurface">
-              <OfficeTab id="TabDefault">
-                <Group id="msgReadDemoGroup">
-                  <Label resid="groupLabel" />
-                  <!-- Function (UI-less) button -->
-                  <Control xsi:type="Button" id="msgReadFunctionButton">
-                    <Label resid="funcReadButtonLabel" />
-                    <Supertip>
-                      <Title resid="funcReadSuperTipTitle" />
-                      <Description resid="funcReadSuperTipDescription" />
-                    </Supertip>
-                    <Icon>
-                      <bt:Image size="16" resid="blue-icon-16" />
-                      <bt:Image size="32" resid="blue-icon-32" />
-                      <bt:Image size="80" resid="blue-icon-80" />
-                    </Icon>
-                    <Action xsi:type="ExecuteFunction">
-                      <FunctionName>loadRestDetails</FunctionName>
-                    </Action>
-                  </Control>
-                </Group>
-              </OfficeTab>
-            </ExtensionPoint>
-
             <!-- Message read form -->
             <ExtensionPoint xsi:type="MessageReadCommandSurface">
               <OfficeTab id="TabDefault">
@@ -215,12 +160,10 @@
                 </Group>
               </OfficeTab>
             </ExtensionPoint>
-
           </DesktopFormFactor>
 
           <MobileFormFactor>
             <FunctionFile resid="functionFile" />
-
             <ExtensionPoint xsi:type="MobileMessageReadCommandSurface">
               <Group id="mobileMsgRead">
                 <Label resid="groupLabel" />
